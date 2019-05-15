@@ -12,6 +12,7 @@ jQuery(document).ready(function ($) {
         $result.append($(`
           <div class="company" id="${project.id}">
             <h2>${project.name}</h2>
+            <h3><i>By ${project.creator}</i></h3>
             <h3>${project.category}</h3>
             <p>${project.location}</p>
             <span class="summary">${project.short_description}</span>

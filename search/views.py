@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -38,7 +39,10 @@ def search(request):
         persons = persons.filter(location__icontains=location)
 
     # get project name like search query
-    projects = Project.objects.filter(name__icontains=search_query)
+    projects = Project.objects.filter(
+        Q(name__icontains=search_query) |
+        Q(creator__name__icontains=search_query)
+    )
     if location:
         projects = projects.filter(location__icontains=location)
     if category:
@@ -48,6 +52,7 @@ def search(request):
         'projects': list(
             map(lambda p: {
                 'name': p.name,
+                'creator': p.creator.name,
                 'location': p.location,
                 'category': p.category.name,
                 'short_description': p.short_description

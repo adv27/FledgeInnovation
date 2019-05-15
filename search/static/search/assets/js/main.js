@@ -1,21 +1,21 @@
 jQuery(document).ready(function ($) {
-  let positions = null;
+  let projects = null;
   let $result = $('#result');
   let $searchForm = $('#search_form');
 
-  function renderPosition(positions, clear = true) {
+  function renderProjects(projects, clear = true) {
     if (clear) {
       $result.empty();
     }
-    if (Array.isArray(positions) && positions.length) {
-      for (let item of positions) {
+    if (Array.isArray(projects) && projects.length) {
+      for (let project of projects) {
         $result.append($(`
-            <div class="company" id="${item.id}">
-            <h2>${item.company}</h2>
-            <h3>${item.created_at}</h3>
-            <p>${item.location}</p>
-            <span class="summary">${item.description.substring(0, 300)}...</span>
-            </div>`));
+          <div class="company" id="${project.id}">
+            <h2>${project.name}</h2>
+            <h3>${project.category}</h3>
+            <p>${project.location}</p>
+            <span class="summary">${project.short_description}</span>
+          </div><br/>`));
       }
     } else {
       $result.append('<div><h2>No result found</h2></div>')
@@ -25,7 +25,7 @@ jQuery(document).ready(function ($) {
   // click event when click a job
   $('div').on('click', '.company', function () {
     let _id = $(this).attr('id');
-    let p = positions.find(p => p.id === _id
+    let p = projects.find(p => p.id === _id
       )
     ;
     $("#detail").empty()
@@ -75,8 +75,8 @@ jQuery(document).ready(function ($) {
       }
     }).done(function (result) {
       console.log(result);
-      positions = result;
-      renderPosition(positions);
+      projects = result['projects'];
+      renderProjects(projects);
     });
   });
 

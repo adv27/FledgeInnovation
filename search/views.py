@@ -45,6 +45,12 @@ def search(request):
         projects = projects.filter(category=category)
 
     return JsonResponse({
-        'project': list(map(lambda p: p.name, projects)),
+        'projects': list(
+            map(lambda p: {
+                'name': p.name,
+                'location': p.location,
+                'category': p.category.name,
+                'short_description': p.short_description
+            }, projects)),
         'persons': list(map(lambda p: p.name, persons)),
     })

@@ -16,8 +16,7 @@ setup()
 def get_user_bio(url):
     r = requests.get(url)
     try:
-        response = r.json()
-        return response
+        return r.json()
     except JSONDecodeError:
         return None
 
@@ -93,7 +92,7 @@ def main():
     page_start = 1
     page_end = 100
     for page in range(page_start, page_end + 1):
-        querystring.update({'page': page})
+        querystring['page'] = page
         response = requests.request("GET", url, data=payload, headers=headers, params=querystring)
         json_response = response.json()
         projects = json_response['projects']
